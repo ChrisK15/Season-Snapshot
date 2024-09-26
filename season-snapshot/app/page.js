@@ -1,95 +1,85 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+'use client';
+import {
+  Button,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  Typography,
+} from '@mui/material';
+import React, { useState } from 'react';
+import axios from 'axios';
 
 export default function Home() {
-  return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>app/page.js</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  // STATES
+  const [team, setTeam] = useState('');
+  // const [open, setOpen] = useState('');
 
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+  // FUNCTIONS
+  const handleChange = (e) => {
+    setTeam(e.target.value);
+  };
+
+  const getTeam = () => {
+    // Needed for CORS
+    const config = {
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        //'Access-Control-Allow-Credentials': 'true',
+        //'Access-Control-Allow-Methods': 'GET,HEAD,OPTIONS,POST,PUT',
+        //'Access-Control-Allow-Headers':
+        //  'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers',
+      },
+    };
+
+    axios
+      .get(
+        'https://api.sportradar.com/nba/trial/v8/en/league/teams.json?api_key=8SvrEWC5SYO5N1Vu8WnNdGMCpaC3WZggnFmSp0vD',
+        config
+      )
+      .then((reponse) => {
+        console.log(reponse);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  return (
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+      }}
+    >
+      <Typography variant='h1'>Season Snapshot</Typography>
+      <div style={{ display: 'flex', flexDirection: 'row' }}>
+        <FormControl sx={{ m: 1, minWidth: 80 }}>
+          <InputLabel id='team-select-label'>Team</InputLabel>
+          <Select
+            labelId='team-select-label'
+            id='team-select'
+            value={team}
+            onChange={handleChange}
+            autoWidth
+            label='Team'
           >
-            <Image
-              className={styles.logo}
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+            <MenuItem value={1}>Lakers</MenuItem>
+            <MenuItem value={2}>Bulls</MenuItem>
+            <MenuItem value={3}>Warriors</MenuItem>
+          </Select>
+        </FormControl>
+
+        <Button
+          variant='contained'
+          size='small'
+          disableElevation
+          onClick={getTeam}
         >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+          Open
+        </Button>
+      </div>
     </div>
   );
 }
