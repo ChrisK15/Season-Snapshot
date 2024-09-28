@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import {
   Button,
   FormControl,
@@ -6,13 +6,13 @@ import {
   MenuItem,
   Select,
   Typography,
-} from '@mui/material';
-import React, { useState } from 'react';
-import axios from 'axios';
+} from "@mui/material";
+import React, { useState } from "react";
+import axios from "axios";
 
 export default function Home() {
   // STATES
-  const [team, setTeam] = useState('');
+  const [team, setTeam] = useState("");
   // const [open, setOpen] = useState('');
 
   // FUNCTIONS
@@ -22,7 +22,7 @@ export default function Home() {
 
   const getTeam = async () => {
     // Call the local API route
-    const response = await axios.get('/api/proxy');
+    const response = await axios.get("/api/proxy/");
     //setData(response.data);
     console.log(response.data);
   };
@@ -30,13 +30,13 @@ export default function Home() {
   return (
     <div
       style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
       }}
     >
       <Typography variant='h1'>Season Snapshot</Typography>
-      <div style={{ display: 'flex', flexDirection: 'row' }}>
+      <div style={{ display: "flex", flexDirection: "row" }}>
         <FormControl sx={{ m: 1, minWidth: 80 }}>
           <InputLabel id='team-select-label'>Team</InputLabel>
           <Select
