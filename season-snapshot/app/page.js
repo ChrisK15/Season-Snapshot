@@ -20,29 +20,11 @@ export default function Home() {
     setTeam(e.target.value);
   };
 
-  const getTeam = () => {
-    // Needed for CORS
-    const config = {
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        //'Access-Control-Allow-Credentials': 'true',
-        //'Access-Control-Allow-Methods': 'GET,HEAD,OPTIONS,POST,PUT',
-        //'Access-Control-Allow-Headers':
-        //  'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers',
-      },
-    };
-
-    axios
-      .get(
-        'https://api.sportradar.com/nba/trial/v8/en/league/teams.json?api_key=8SvrEWC5SYO5N1Vu8WnNdGMCpaC3WZggnFmSp0vD',
-        config
-      )
-      .then((reponse) => {
-        console.log(reponse);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  const getTeam = async () => {
+    // Call the local API route
+    const response = await axios.get('/api/proxy');
+    //setData(response.data);
+    console.log(response.data);
   };
 
   return (
