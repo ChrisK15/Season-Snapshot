@@ -9,7 +9,6 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-
 import { nbaTeams } from "./teams";
 
 export default function Home() {
@@ -23,7 +22,12 @@ export default function Home() {
     const getTeamNames = async () => {
       try {
         const response = await axios.get("/api/proxy/"); // calls API
-        console.log(response.data);
+
+        const filteredTeams = response.data.filter((team) =>
+          nbaTeams.includes(team.market)
+        );
+        setTeamNames(filteredTeams);
+        console.log(filteredTeams);
       } catch (err) {
         console.error("Error fetching team names:", err);
       }
@@ -57,9 +61,9 @@ export default function Home() {
             autoWidth
             label='Team'
           >
-            {nbaTeams.map((name, index) => (
-              <MenuItem key={index} value={name}>
-                {name}
+            {teamNames.map((teamObj) => (
+              <MenuItem key={teamObj.id} value={teamObj.name}>
+                {teamObj.market} {teamObj.name}
               </MenuItem>
             ))}
           </Select>

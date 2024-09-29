@@ -8,9 +8,9 @@ export async function GET() {
     );
 
     // team names for list of teams
-    const teamNames = response.data.teams.map((team) => team.name);
+    const teams = response.data.teams;
 
-    return NextResponse.json(teamNames);
+    return NextResponse.json(teams);
   } catch (error) {
     return NextResponse.json(
       { message: "Error fetching data" },
