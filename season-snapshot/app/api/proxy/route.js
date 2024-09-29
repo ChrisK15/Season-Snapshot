@@ -3,8 +3,12 @@ import axios from "axios";
 
 export async function GET() {
   try {
+    const headers = {
+      accept: "application/json",
+    };
     const response = await axios.get(
-      "https://api.sportradar.com/nba/trial/v8/en/league/teams.json?api_key=8SvrEWC5SYO5N1Vu8WnNdGMCpaC3WZggnFmSp0vD"
+      "https://api.sportradar.com/nba/trial/v8/en/league/teams.json?api_key=8SvrEWC5SYO5N1Vu8WnNdGMCpaC3WZggnFmSp0vD",
+      { headers }
     );
 
     // team names for list of teams
