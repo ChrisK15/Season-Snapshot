@@ -7,24 +7,34 @@ import {
   Select,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
+
+import { nbaTeams } from "./teams";
 
 export default function Home() {
   // STATES
   const [team, setTeam] = useState("");
-  // const [open, setOpen] = useState('');
+  const [teamNames, setTeamNames] = useState([]);
+  const [open, setOpen] = useState("");
+
+  // API stuff
+  useEffect(() => {
+    const getTeamNames = async () => {
+      try {
+        const response = await axios.get("/api/proxy/"); // calls API
+        console.log(response.data);
+      } catch (err) {
+        console.error("Error fetching team names:", err);
+      }
+    };
+
+    getTeamNames();
+  }, []);
 
   // FUNCTIONS
   const handleChange = (e) => {
     setTeam(e.target.value);
-  };
-
-  const getTeam = async () => {
-    // Call the local API route
-    const response = await axios.get("/api/proxy/");
-    //setData(response.data);
-    console.log(response.data);
   };
 
   return (
@@ -47,9 +57,11 @@ export default function Home() {
             autoWidth
             label='Team'
           >
-            <MenuItem value={1}>Lakers</MenuItem>
-            <MenuItem value={2}>Bulls</MenuItem>
-            <MenuItem value={3}>Warriors</MenuItem>
+            {nbaTeams.map((name, index) => (
+              <MenuItem key={index} value={name}>
+                {name}
+              </MenuItem>
+            ))}
           </Select>
         </FormControl>
 
@@ -57,7 +69,7 @@ export default function Home() {
           variant='contained'
           size='small'
           disableElevation
-          onClick={getTeam}
+          onClick={null}
         >
           Open
         </Button>
