@@ -15,7 +15,7 @@ export default function Home() {
   // STATES
   const [team, setTeam] = useState("");
   const [teamNames, setTeamNames] = useState([]);
-  const [open, setOpen] = useState("");
+  const [open, setOpen] = useState(false);
 
   // API stuff
   useEffect(() => {
@@ -27,7 +27,7 @@ export default function Home() {
           nbaTeams.includes(team.market)
         );
         setTeamNames(filteredTeams);
-        console.log(filteredTeams);
+        //console.log(filteredTeams);
       } catch (err) {
         console.error("Error fetching team names:", err);
       }
@@ -39,6 +39,10 @@ export default function Home() {
   // FUNCTIONS
   const handleChange = (e) => {
     setTeam(e.target.value);
+  };
+
+  const handleOpen = () => {
+    null;
   };
 
   return (
@@ -73,7 +77,7 @@ export default function Home() {
           variant='contained'
           size='small'
           disableElevation
-          onClick={null}
+          onClick={handleOpen}
         >
           Open
         </Button>
