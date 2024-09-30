@@ -1,7 +1,9 @@
 "use client";
 import {
+  Box,
   Button,
   FormControl,
+  Grid2,
   InputLabel,
   MenuItem,
   Select,
@@ -9,40 +11,52 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { nbaTeams } from "./teams";
+
+import { nbaTeams } from "./data/teams";
+import { columns } from "./data/tableStuff";
 
 export default function Home() {
   // STATES
   const [team, setTeam] = useState("");
   const [teamNames, setTeamNames] = useState([]);
   const [open, setOpen] = useState(false);
+  const [teamStats, setTeamStats] =
+    // API stuff
+    useEffect(() => {
+      const getTeamNames = async () => {
+        try {
+          const response = await axios.get("/api/proxy/"); // calls API
 
-  // API stuff
-  useEffect(() => {
-    const getTeamNames = async () => {
-      try {
-        const response = await axios.get("/api/proxy/"); // calls API
+          const filteredTeams = response.data.filter((team) =>
+            nbaTeams.includes(team.market)
+          );
+          setTeamNames(filteredTeams);
+          //console.log(filteredTeams);
+        } catch (err) {
+          console.error("Error fetching team names:", err);
+        }
+      };
 
-        const filteredTeams = response.data.filter((team) =>
-          nbaTeams.includes(team.market)
-        );
-        setTeamNames(filteredTeams);
-        //console.log(filteredTeams);
-      } catch (err) {
-        console.error("Error fetching team names:", err);
-      }
-    };
-
-    getTeamNames();
-  }, []);
+      // const getTeamStats = async () => {
+      //   try {
+      //     const response = await axios.get("/api/proxy/"); // calls API
+      //     setTeamStats(response.data);
+      //     console.log(response.data);
+      //   } catch (err) {
+      //     console.error("Error fetching team names:", err);
+      //   }
+      // };
+      // getTeamStats();
+      getTeamNames();
+    }, []);
 
   // FUNCTIONS
   const handleChange = (e) => {
     setTeam(e.target.value);
   };
 
-  const handleOpen = () => {
-    null;
+  const handleClick = () => {
+    setOpen(!open);
   };
 
   return (
@@ -77,11 +91,25 @@ export default function Home() {
           variant='contained'
           size='small'
           disableElevation
-          onClick={handleOpen}
+          onClick={handleClick}
         >
           Open
         </Button>
       </div>
+
+      {open && (
+        <Box
+          mt={2}
+          p={2}
+          border={1}
+          borderRadius={8}
+          borderColor='grey.300'
+          bgcolor='grey.100'
+          height={700} // Fixed height
+          width={400} // Fixed width
+          overflow='auto' // Scrollable content
+        ></Box>
+      )}
     </div>
   );
 }
