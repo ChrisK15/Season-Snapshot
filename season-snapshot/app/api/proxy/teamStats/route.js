@@ -6,9 +6,10 @@ export async function GET() {
     const headers = {
       accept: 'application/json',
     };
+    const apiKey = process.env.SPORTS_RADAR_API_KEY;
     // TEAM STATS
     const teamStatsResponse = await axios.get(
-      'https://api.sportradar.com/nba/trial/v8/en/seasons/2023/REG/teams/583eca2f-fb46-11e1-82cb-f4ce4684ea4c/statistics.json?api_key=8SvrEWC5SYO5N1Vu8WnNdGMCpaC3WZggnFmSp0vD',
+      `https://api.sportradar.com/nba/trial/v8/en/seasons/2023/REG/teams/583eca2f-fb46-11e1-82cb-f4ce4684ea4c/statistics.json?api_key=${apiKey}`,
       { headers }
     );
     const teamStats = teamStatsResponse.data.own_record.average;

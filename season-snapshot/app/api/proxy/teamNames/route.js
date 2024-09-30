@@ -6,9 +6,10 @@ export async function GET() {
     const headers = {
       accept: 'application/json',
     };
+    const apiKey = process.env.SPORTS_RADAR_API_KEY;
     // LIST OF TEAMS
     const teamListResponse = await axios.get(
-      'https://api.sportradar.com/nba/trial/v8/en/league/teams.json?api_key=8SvrEWC5SYO5N1Vu8WnNdGMCpaC3WZggnFmSp0vD',
+      `https://api.sportradar.com/nba/trial/v8/en/league/teams.json?api_key=${apiKey}`,
       { headers }
     );
     const teams = teamListResponse.data.teams;
