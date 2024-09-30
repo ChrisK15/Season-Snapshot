@@ -25,7 +25,7 @@ export default function Home() {
   useEffect(() => {
     const getTeamNames = async () => {
       try {
-        const response = await axios.get('/api/teamNames/'); // calls API
+        const response = await axios.get('/api/proxy/teamNames/'); // calls API
 
         const filteredTeams = response.data.filter((team) =>
           nbaTeams.includes(team.market)
@@ -39,7 +39,7 @@ export default function Home() {
 
     const getTeamStats = async () => {
       try {
-        const response = await axios.get('/api/teamStats/'); // calls API
+        const response = await axios.get('/api/proxy/teamStats/'); // calls API
         //setTeamStats(response.data);
         console.log(response.data);
       } catch (err) {
