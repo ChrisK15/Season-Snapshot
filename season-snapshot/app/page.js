@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import {
   Box,
   Button,
@@ -8,47 +8,47 @@ import {
   MenuItem,
   Select,
   Typography,
-} from "@mui/material";
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+} from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
-import { nbaTeams } from "./data/teams";
-import { columns } from "./data/tableStuff";
+import { nbaTeams } from './data/teams';
+import { columns } from './data/tableStuff';
 
 export default function Home() {
   // STATES
-  const [team, setTeam] = useState("");
+  const [team, setTeam] = useState('');
   const [teamNames, setTeamNames] = useState([]);
   const [open, setOpen] = useState(false);
-  const [teamStats, setTeamStats] =
-    // API stuff
-    useEffect(() => {
-      const getTeamNames = async () => {
-        try {
-          const response = await axios.get("/api/proxy/"); // calls API
+  const [teamStats, setTeamStats] = useState([]);
+  // API stuff
+  useEffect(() => {
+    const getTeamNames = async () => {
+      try {
+        const response = await axios.get('/api/teamNames/'); // calls API
 
-          const filteredTeams = response.data.filter((team) =>
-            nbaTeams.includes(team.market)
-          );
-          setTeamNames(filteredTeams);
-          //console.log(filteredTeams);
-        } catch (err) {
-          console.error("Error fetching team names:", err);
-        }
-      };
+        const filteredTeams = response.data.filter((team) =>
+          nbaTeams.includes(team.market)
+        );
+        setTeamNames(filteredTeams);
+        //console.log(filteredTeams);
+      } catch (err) {
+        console.error('Error fetching team names:', err);
+      }
+    };
 
-      // const getTeamStats = async () => {
-      //   try {
-      //     const response = await axios.get("/api/proxy/"); // calls API
-      //     setTeamStats(response.data);
-      //     console.log(response.data);
-      //   } catch (err) {
-      //     console.error("Error fetching team names:", err);
-      //   }
-      // };
-      // getTeamStats();
-      getTeamNames();
-    }, []);
+    const getTeamStats = async () => {
+      try {
+        const response = await axios.get('/api/teamStats/'); // calls API
+        //setTeamStats(response.data);
+        console.log(response.data);
+      } catch (err) {
+        console.error('Error fetching team names:', err);
+      }
+    };
+    getTeamStats();
+    getTeamNames();
+  }, []);
 
   // FUNCTIONS
   const handleChange = (e) => {
@@ -62,13 +62,13 @@ export default function Home() {
   return (
     <div
       style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
       }}
     >
       <Typography variant='h1'>Season Snapshot</Typography>
-      <div style={{ display: "flex", flexDirection: "row" }}>
+      <div style={{ display: 'flex', flexDirection: 'row' }}>
         <FormControl sx={{ m: 1, minWidth: 80 }}>
           <InputLabel id='team-select-label'>Team</InputLabel>
           <Select

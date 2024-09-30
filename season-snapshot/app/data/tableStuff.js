@@ -1,4 +1,4 @@
-export function createColumns(
+export function createData(
   points,
   three_points_made,
   field_goals_made,
